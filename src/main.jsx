@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import Home from './components/Home/Home.jsx';
 import Categories from './components/Categories/Categories.jsx';
+import Meals from './components/Meals/Meals.jsx';
+import Meal from './components/Meal/Meal.jsx';
 
 const router = createBrowserRouter([
   {
@@ -17,13 +19,23 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <App/>
+      }
+      ,
+      {
+        path: '/categories',
         element: <Categories/>,
         loader: () => fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
       },
       {
         path: '/category/:categoryId',
-        element: <Categories/>,
+        element: <Meals/>,
         loader: ({params}) => fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${params.categoryId}`)
+      },
+      {
+        path: "/meal/:mealId",
+        element: <Meal/>,
+        loader: ({params}) => fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params.mealId}`)
       }
     ]
   }
